@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>캠핑장 리뷰</title>
+<link rel="stylesheet" href="css/detail.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/CampingLog/js/include.js"></script>
+</head>
+<body>
+	<div id="container">
+	<input type="hidden" id="postId">
+	
+		<div data-include="header.html"></div>
+		<div class="page-title"></div>
+
+		<div class="post">
+			<div class="post-header">
+				<div class="profile">
+					<img src="" alt="프로필 이미지" class="profile-img" onerror="this.src='img/defaultMemberImage.png'">
+					<div class="profile-name-badge">
+						<img src="" class="badge">
+						<div class="nickName"></div>
+					</div>
+				</div>
+
+				<div class="title">
+					<div class="manage-post">
+						<button class="edit-btn">수정</button>
+						<button id="delete-btn">삭제</button>
+					</div>
+					<div class="post-title"></div>
+					<div class="tags">
+						<div></div> 
+						<div></div>
+					</div>
+				</div>
+				<div class="post-info">
+					<div></div>
+				</div>
+			</div>
+
+			<div class="post-content">
+				<div class="post-image">
+					<img src="" alt="캠핑장 사진" onerror="this.src='img/defaultImage.png'">
+				</div>
+
+				<div class="post-body"></div>
+
+				<div class="post-footer">
+					<div class="post-footer-set">
+					<button class="like-btn" data-memberid="">❤️</button>
+					<div class="like-count"></div>  
+				</div>
+				<div class="post-footer-set">
+						<button class="bookmark-btn">⭐</button>
+						<div class="bookmark-count"></div>
+					</div>
+			</div>
+		</div>
+
+		<div class="comments">
+			<div class="comment-header">
+				<div class="comment-marks">
+					<div class="comment-mark">
+						<h3>댓글</h3>
+					</div>
+					<div class="comment-count"></div>
+				</div>
+				<div class="comment-input">
+					<img src="" alt="내 프로필" onerror="this.src='img/defaultMemberImage.png'" class="comment-profile-img"> 
+					<input type="text" id="comment-input" placeholder="댓글을 남겨주세요.">
+					<button id="comment-btn">등록</button>
+				</div>
+			</div>
+
+			<div class="comment-list"></div>
+
+			<div class="pagination">
+				<div class="arrow">&laquo;</div>
+				<div class="current-page"></div>
+				<div class="page"></div>
+				<div class="page"></div>
+				<div class="arrow">&raquo;</div>
+			</div>
+		</div>
+		<div data-include="footer.html"></div>
+	</div>
+</div>
+</body>
+</html>

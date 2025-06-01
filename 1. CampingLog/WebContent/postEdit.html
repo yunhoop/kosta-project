@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시글 수정</title>
+<link rel="stylesheet" href="css/postWrite.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/include.js" defer></script>
+</head>
+<body>
+	<div id="container">
+		<div data-include="header.html"></div>
+		<h2>게시글 수정</h2>
+		<form id="editForm" enctype="multipart/form-data">
+			<input type="hidden" name="postId" id="postId">
+			<input type="hidden" name="originalImageName" id="originalImageName" /> 
+			<input type="text" id="postTitle" name="postTitle" placeholder="제목을 입력하세요" required />
+			<select name="categoryId" id="categoryId" required>
+				<option value="">카테고리 선택</option>
+				<option value="2">초보꿀팁</option>
+				<option value="3">캠핑장 리뷰</option>
+				<option value="4">장비 리뷰</option>
+				<option value="5">Q&A</option>
+			</select>
+
+			<div class="editor-box">
+				<textarea id="postContents" name="postContents"
+					placeholder="내용을 입력하세요" required></textarea>
+			</div>
+
+			<input type="file" id="imageInput" name="postImageFile"
+				accept="image/*" style="display: none;" /> <input type="text"
+				id="imageFileNameDisplay" placeholder="선택된 파일 없음" readonly />
+
+			<div class="image-upload-box" onclick="triggerImageUpload()">
+				<p id="imagePreviewBox">
+					<img src="img/photoicon.png" alt="미리보기" id="previewImg"
+						class="preview-image" /> <br /> <span id="uploadGuide">이미지를
+						클릭하여 변경하세요</span>
+				</p>
+			</div>
+
+			<div id="selectedTags"></div>
+			<div class="tag-grid" id="tagContainer"></div>
+
+			<button type="submit" class="submit-btn">수정하기</button>
+		</form>
+
+
+		<div data-include="footer.html"></div>
+	</div>
+
+	<script src="js/loadEditPost.js" defer></script>
+	<script src="js/tagLoader.js" defer></script>
+	<script src="js/imagePreview.js" defer></script>
+	<script src="js/tagToggle.js" defer></script>
+</body>
+</html>

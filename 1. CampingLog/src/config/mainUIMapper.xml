@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mainUIMapper">
+	<select id="getPopularCampingList" parameterType="com.camp.model.PostVO"
+		resultType="com.camp.model.PostVO">
+  <![CDATA[
+    SELECT * FROM (
+      SELECT inner_result.* FROM (
+        SELECT p.postId, p.postTitle, p.postImage, TO_CHAR(p.postDate, 'YYYY.MM.DD') AS postDate,
+               m.nickName, COUNT(l.postId) AS likeCount
+        FROM Post p
+        JOIN Member m ON p.memberId = m.memberId
+        LEFT JOIN Likes l ON p.postId = l.postId
+        WHERE p.categoryId = #{categoryId}
+        GROUP BY p.postId, p.postTitle, p.postImage, p.postDate, m.nickName
+        ORDER BY likeCount DESC
+      ) inner_result
+      WHERE ROWNUM <= 3
+    )
+  ]]>
+	</select>
+	<select id="getTopMemberRank" resultType="com.camp.model.MemberVO">
+  <![CDATA[
+    SELECT * FROM (
+      SELECT g.BADGEIMAGE AS badgeImage, m.nickName, COUNT(l.postId) AS totalLikes
+      FROM Member m
+      JOIN Post p ON m.memberId = p.memberId
+      LEFT JOIN Likes l ON p.postId = l.postId
+      JOIN Grade g ON m.gradeId = g.gradeId
+      GROUP BY m.memberId, m.nickName, g.BADGEIMAGE
+      ORDER BY totalLikes DESC
+    ) 
+    WHERE ROWNUM <= 5
+  ]]>
+	</select>
+	<select id="getPopularEquList" parameterType="com.camp.model.PostVO"
+		resultType="com.camp.model.PostVO">
+  <![CDATA[
+    SELECT * FROM (
+      SELECT inner_result.* FROM (
+        SELECT p.postId, p.postTitle, p.postImage, TO_CHAR(p.postDate, 'YYYY.MM.DD') AS postDate,
+               m.nickName, COUNT(l.postId) AS likeCount
+        FROM Post p
+        JOIN Member m ON p.memberId = m.memberId
+        LEFT JOIN Likes l ON p.postId = l.postId
+        WHERE p.categoryId = #{categoryId}
+        GROUP BY p.postId, p.postTitle, p.postImage, p.postDate, m.nickName
+        ORDER BY likeCount DESC
+      ) inner_result
+      WHERE ROWNUM <= 6
+    )
+  ]]>
+	</select>
+	<update id="updateAllMemberGrade">
+		UPDATE MEMBER m
+		SET m.gradeId = (
+		SELECT MAX(g.gradeId)
+		FROM GRADE g
+		WHERE (
+		SELECT COUNT(l.postId)
+		FROM POST p
+		LEFT JOIN LIKES l ON p.postId = l.postId
+		WHERE p.memberId = m.memberId
+		) >= g.gradeLevel
+		)
+		WHERE EXISTS (
+		SELECT 1
+		FROM POST p
+		WHERE p.memberId = m.memberId
+		)
+		AND m.gradeId != (
+		SELECT MAX(g.gradeId)
+		FROM GRADE g
+		WHERE (
+		SELECT COUNT(l.postId)
+		FROM POST p
+		LEFT JOIN LIKES l ON p.postId = l.postId
+		WHERE p.memberId = m.memberId
+		) >= g.gradeLevel
+		)
+	</update>
+
+	<update id="updateMemberGradeById" parameterType="String">
+		UPDATE MEMBER m
+		SET m.gradeId = (
+		SELECT MAX(g.gradeId)
+		FROM GRADE g
+		WHERE (
+		SELECT COUNT(l.postId)
+		FROM POST p
+		LEFT JOIN LIKES l ON p.postId = l.postId
+		WHERE p.memberId = #{memberId}
+		) >= g.gradeLevel
+		)
+		WHERE m.memberId = #{memberId}
+	</update>
+	<select id="getYesterdayTopMemberRank" parameterType="String" resultType="com.camp.model.MemberVO">
+    	<![CDATA[
+    	SELECT *FROM (
+    		SELECT l.memberId, m.nickname AS nickName,
+           	(SELECT g.badgeImage FROM grade g WHERE g.gradeId = m.gradeId) AS badgeImage,
+           	COUNT(*) AS likeCount
+    	FROM likes l
+    	INNER JOIN member m ON l.memberId = m.memberId
+    	WHERE TO_CHAR(l.likeDate, 'YYYY-MM-DD') = #{date}
+    	GROUP BY l.memberId, m.nickname, m.gradeId
+    	ORDER BY likeCount DESC
+		) 
+		WHERE ROWNUM <= 5
+    	]]>
+	</select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tagMapper">
+
+	<select id="getTag" parameterType="int" resultType="String">
+		SELECT
+		t.tagName
+		FROM post p
+		LEFT OUTER JOIN postTag pt ON p.postId=pt.postId
+		LEFT OUTER JOIN tag t ON pt.tagId=t.tagId
+		WHERE p.postId=#{postId}
+	</select>
+
+	<!-- 카테고리별 태그 이름 -->
+	<select id="getTagsByCategory" parameterType="int"
+		resultType="com.camp.model.TagVO">
+		SELECT
+		t.tagId,
+		t.tagName
+		FROM Tag t
+		WHERE t.categoryId =
+		#{categoryId}
+		ORDER BY t.tagName
+	</select>
+	<select id="getAllTags" resultType="com.camp.model.TagVO">
+		SELECT * FROM tag
+	</select>
+	<select id="getTagsByCategoryId" parameterType="int"
+		resultType="com.camp.model.TagVO">
+		SELECT tagId, tagName, categoryId
+		FROM Tag
+		WHERE categoryId =
+		#{categoryId}
+	</select>
+
+</mapper>

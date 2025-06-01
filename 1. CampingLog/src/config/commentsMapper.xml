@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="commentsMapper">
+
+	<select id="getComments" parameterType="int" resultType="com.camp.model.CommentsVO">
+		SELECT c.commentContents, c.commentDate, m.nickName, (SELECT badgeImage FROM grade g WHERE g.gradeId=m.gradeId) badgeImage, m.memberImage
+		FROM comments c
+		INNER JOIN member m ON c.memberId=m.memberId
+		WHERE postId=#{postId}
+		ORDER BY commentDate DESC
+	</select>
+
+	<insert id="addComments" parameterType="com.camp.model.CommentsVO">
+		INSERT INTO Comments VALUES 
+		(comments_seq.NEXTVAL, #{commentContents}, SYSDATE, #{postId}, #{memberId})
+	</insert>
+	
+	<select id="getMemberImage" parameterType="String" resultType="String">
+		SELECT memberImage
+		FROM member
+		WHERE memberId=#{memberId}
+	</select>
+	
+	<select id="getCommentsPagination" parameterType="map" resultType="com.camp.model.CommentsVO">
+		SELECT commentId, commentContents, commentDate, nickName, memberImage, badgeImage, rn
+		FROM (
+			SELECT comment_info.commentId, comment_info.commentContents, comment_info.commentDate,
+				comment_info.nickName, comment_info.memberImage, comment_info.badgeImage, ROWNUM as rn
+			FROM (
+    			SELECT c.commentId, c.commentContents, c.commentDate, m.nickName, m.memberImage,
+    				(SELECT badgeImage FROM grade g WHERE g.gradeId = m.gradeId) badgeImage
+    			FROM Comments c
+			    LEFT JOIN member m ON c.memberId = m.memberId
+			    WHERE c.postId = #{postId}
+			    ORDER BY c.commentDate DESC
+			) comment_info
+			WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rn &gt;= #{startRow}
+		ORDER BY rn
+	</select>
+</mapper>

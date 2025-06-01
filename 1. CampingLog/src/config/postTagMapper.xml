@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postTagMapper">
+	<insert id="insertPostTag" parameterType="map">
+		INSERT INTO PostTag
+		(postTagId, postId, tagId)
+		VALUES (posttag_seq.NEXTVAL, #{postId},
+		#{tagId})
+	</insert>
+
+	<select id="getTagIdsByPostId" parameterType="int" resultType="int">
+		SELECT tagId
+		FROM PostTag
+		WHERE postId = #{postId}
+	</select>
+
+	<delete id="deleteTagsByPostId" parameterType="int">
+		DELETE FROM PostTag WHERE postId = #{postId}
+	</delete>
+
+</mapper>

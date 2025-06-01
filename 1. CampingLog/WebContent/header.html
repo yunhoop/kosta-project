@@ -1,0 +1,36 @@
+<div id="header">
+  <div class="leftMenu">
+    <a href="/CampingLog/mainUI.html">
+      <img src="/CampingLog/img/headerLogo.png" alt="캠핑로고" class="headerLogoImg">
+    </a>
+  </div>
+
+  <div class="middleMenu"></div>
+
+  <div class="rightMenu">
+    <div class="totalSearch">
+      <form action="/CampingLog/controller" method="get" class="searchBox">
+        <input type="hidden" name="cmd" value="searchResultUI">
+        <input type="text" name="searchTerm" placeholder="내가 원하는 캠핑장은?">
+        <button type="submit" class="searchIcon">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="buttonBox">
+      <div class="authButton">
+        <a href="/CampingLog/signUp.html" class="btn">회원가입</a>
+      </div>
+      <div class="loginButton">
+        <a href="/CampingLog/login.html" class="btn">로그인</a>
+      </div>
+
+      <!-- 로그인 후 (초기 hidden) -->
+      <div class="userInfo" style="display: none;">
+        <img src="" alt="프로필 이미지" class="profile-img" width="32" height="32">
+        <button id="logoutBtn" class="logout-btn">로그아웃</button>
+      </div>
+    </div>
+  </div>
+</div>

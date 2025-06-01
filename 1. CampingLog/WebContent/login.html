@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로그인 | 캠핑로그</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/login.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <img src="img/campinglogLogo.png" alt="캠핑로그 로고" />
+    </div>
+    <div class="right-panel">
+      <form class="form-box" id="login-form">
+        
+        <div class="form-row">
+          <label for="userid">아이디</label>
+          <input type="text" id="userid" name="id" required />
+        </div>
+
+        <div class="form-row">
+          <label for="password">비밀번호</label>
+          <input type="password" id="password" name="pw" required />
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="login-btn">로그인</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

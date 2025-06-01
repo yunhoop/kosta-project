@@ -1,0 +1,130 @@
+@import url("global.css");
+
+/* 제목 입력 필드 */
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* 카테고리 선택 */
+select {
+  width: 250px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fafafa;
+}
+
+/* 에디터 전체 박스 */
+.editor-box {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+
+/* 본문 입력창 */
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+  height: 200px;
+  border-radius: 0 0 6px 6px;
+}
+
+
+/* 이미지 업로드 박스 */
+.image-upload-box {
+  background-color: #fff5e0;
+  border: 2px dashed #ccc;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
+}
+
+.preview-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+.image-upload-box:hover {
+  background-color: #fff0cc;
+}
+
+.tag-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 50px;
+}
+
+.row-bottom {
+  margin-left: 40px;  
+}
+
+.tag {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: #eee;
+}
+
+.tag.selected {
+  background-color: #1f7d44; 
+  color: white; 
+  border: 1px solid #1f7d44; 
+}
+
+
+/* 제출 버튼 */
+.submit-btn {
+  width: 300px;
+  padding: 14px;
+  background-color: #1f7d44;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 30px;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #196437;
+}

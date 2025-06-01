@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postMapper">
+	<!-- 전체 게시글 수 -->
+	<select id="getTotalPostCount" parameterType="map" resultType="int">
+		SELECT COUNT(DISTINCT p.POSTID)
+		FROM POST p
+		<where>
+			<!-- searchTerm이 있으면 제목·내용으로 필터링 -->
+			<if test="searchTerm != null and searchTerm.trim() != ''">
+				AND (
+				p.POSTTITLE LIKE '%' || #{searchTerm} || '%'
+				OR
+				p.POSTCONTENTS LIKE '%' || #{searchTerm} || '%'
+				)
+			</if>
+		</where>
+	</select>
+
+	<!-- 전체 페이징 + 검색어 조건 -->
+	<select id="getPostsByPage" parameterType="map"
+		resultType="com.camp.model.PostVO">
+		SELECT * FROM (
+		SELECT
+		ROWNUM AS rn,
+		q.*
+		FROM (
+		SELECT
+		p.POSTID AS postId,
+		p.POSTTITLE AS postTitle,
+		p.POSTCONTENTS AS postContents,
+		p.POSTIMAGE AS
+		postImage,
+		p.POSTDATE AS postDate,
+		p.MEMBERID AS memberId,
+		p.CATEGORYID
+		AS categoryId,
+		c.CATEGORYNAME AS categoryName,
+		NVL(l.LIKECOUNT, 0) AS
+		likeCount,
+		NVL(t.TAGLIST, '') AS tagList
+		FROM POST p
+		LEFT JOIN (
+		SELECT
+		POSTID, COUNT(*) AS LIKECOUNT
+		FROM LIKES
+		GROUP BY POSTID
+		) l ON p.POSTID
+		= l.POSTID
+		LEFT JOIN (
+		SELECT
+		pt.POSTID,
+		LISTAGG(t.TAGNAME, ', ')
+		WITHIN
+		GROUP (ORDER BY t.TAGNAME) AS TAGLIST
+		FROM POSTTAG pt
+		JOIN TAG t ON
+		pt.TAGID = t.TAGID
+		GROUP BY pt.POSTID
+		) t ON p.POSTID = t.POSTID
+		LEFT
+		JOIN CATEGORY c ON p.CATEGORYID = c.CATEGORYID
+
+		<where>
+			<if test="searchTerm != null and searchTerm.trim() != ''">
+				AND (
+				p.POSTTITLE LIKE '%' || #{searchTerm} || '%'
+				OR
+				p.POSTCONTENTS LIKE '%' || #{searchTerm} || '%'
+				)
+			</if>
+		</where>
+
+		ORDER BY p.POSTID DESC
+		) q
+		WHERE ROWNUM &lt;= #{end}
+		)
+		WHERE rn &gt;=
+		#{start}
+	</select>
+
+	<select id="getContents" parameterType="int" resultType="com.camp.model.PostVO">
+		SELECT
+		c.categoryName, m.nickName, p.postId, p.memberId, (SELECT badgeImage FROM
+		grade g
+		WHERE g.gradeId=m.gradeId) badgeImage, m.memberImage, p.postTitle,
+		p.postContents, p.postImage, p.postDate, (SELECT COUNT(postId) FROM
+		bookmark bm
+		WHERE bm.postId=p.postId ) bookmarkCount, (SELECT
+		COUNT(postId) FROM likes
+		l
+		WHERE l.postId=p.postId ) likeCount
+		FROM post
+		p
+		INNER JOIN member m ON
+		p.memberId=m.memberId
+		INNER JOIN category c ON
+		p.categoryId=c.categoryId
+		WHERE p.postId=#{postId}
+	</select>
+
+	<select id="getTag" parameterType="int" resultType="String">
+		SELECT
+		t.tagName
+		FROM post p
+		LEFT OUTER JOIN postTag pt ON p.postId=pt.postId
+		LEFT OUTER JOIN tag t ON pt.tagId=t.tagId
+		WHERE p.postId=#{postId}
+	</select>
+
+	<select id="getCategoryName" resultType="com.camp.model.PostVO">
+    <![CDATA[
+      SELECT CATEGORYID AS categoryId,
+             CATEGORYNAME AS categoryName
+        FROM CATEGORY
+    ]]>
+	</select>
+
+	<!-- 카테고리별 페이징 조회 -->
+	<select id="getPostsByCategoryPage" parameterType="map"
+		resultType="com.camp.model.PostVO">
+		SELECT * FROM (
+		SELECT
+		ROWNUM AS rn,
+		q.*
+		FROM (
+		SELECT
+		p.POSTID AS postId,
+		p.POSTTITLE AS postTitle,
+		p.POSTCONTENTS AS postContents,
+		p.POSTIMAGE AS postImage,
+		p.POSTDATE AS postDate,
+		p.MEMBERID AS memberId,
+		p.CATEGORYID
+		AS categoryId,
+		c.CATEGORYNAME AS categoryName,
+		NVL(l.LIKECOUNT, 0) AS
+		likeCount,
+		NVL(t.TAGLIST, '') AS tagList
+		FROM POST p
+		LEFT JOIN (
+		SELECT
+		POSTID, COUNT(*) AS LIKECOUNT
+		FROM LIKES
+		GROUP BY POSTID
+		) l ON p.POSTID
+		= l.POSTID
+		LEFT JOIN (
+		SELECT
+		pt.POSTID,
+		LISTAGG(t.TAGNAME, ', ')
+		WITHIN
+		GROUP (ORDER BY t.TAGNAME) AS tagList
+		FROM POSTTAG pt
+		JOIN TAG t ON
+		pt.TAGID = t.TAGID
+		GROUP BY pt.POSTID
+		) t ON p.POSTID = t.POSTID
+		LEFT
+		JOIN CATEGORY c ON p.CATEGORYID = c.CATEGORYID
+		WHERE p.CATEGORYID =
+		#{categoryId}
+
+		<if test="tagList != null and tagList != ''">
+			AND EXISTS (
+			SELECT 1
+			FROM POSTTAG pt2
+			JOIN TAG t2 ON pt2.TAGID =
+			t2.TAGID
+			WHERE pt2.POSTID = p.POSTID
+			AND t2.TAGNAME IN
+			<foreach collection="tagList.split(',')" item="tag" open="("
+				separator="," close=")">
+				#{tag}
+			</foreach>
+			)
+		</if>
+
+		ORDER BY p.POSTID DESC
+		) q
+		WHERE ROWNUM &lt;= #{end}
+		)
+		WHERE rn &gt;=
+		#{start}
+	</select>
+
+	<!-- 2) 카테고리 + 태그 필터 전체 게시글 수 -->
+	<select id="getTotalPostCountByCategory" parameterType="map"
+		resultType="int">
+		SELECT COUNT(DISTINCT p.POSTID)
+		FROM POST p
+		<if test="tagList != null and tagList != ''">
+			JOIN POSTTAG pt ON p.POSTID = pt.POSTID
+			JOIN TAG t ON
+			pt.TAGID = t.TAGID
+		</if>
+		WHERE p.CATEGORYID = #{categoryId}
+		<if test="tagList != null and tagList != ''">
+			AND t.TAGNAME IN
+			<foreach item="tag" collection="tagList.split(',')" open="("
+				separator="," close=")">
+				#{tag}
+			</foreach>
+		</if>
+	</select>
+
+	<insert id="insertPost" parameterType="com.camp.model.PostVO">
+		INSERT INTO post (
+		postId,
+		postTitle, postContents, postImage, postDate,
+		memberId, categoryId
+		)
+		VALUES (
+		post_seq.NEXTVAL,
+		#{postTitle},
+		#{postContents},
+		#{postImage,
+		jdbcType=VARCHAR},
+		SYSDATE,
+		#{memberId},
+		#{categoryId}
+		)
+	</insert>
+
+	<select id="getLastPostId" resultType="int">
+		SELECT MAX(postId) FROM
+		Post
+	</select>
+
+	<select id="getPostById" resultType="com.camp.model.PostVO">
+		SELECT * FROM post WHERE
+		postId = #{postId}
+	</select>
+
+	<update id="updatePost" parameterType="com.camp.model.PostVO">
+		UPDATE post
+		SET postTitle =
+		#{postTitle},
+		postContents = #{postContents},
+		postImage = #{postImage},
+		categoryId = #{categoryId}
+		WHERE postId = #{postId}
+	</update>
+	<delete id="deletePost" parameterType="int">
+		DELETE FROM post WHERE
+		postId = #{postId}
+	</delete>
+	<insert id="insertLike" parameterType="map">
+		INSERT INTO LIKES (postId,
+		memberId, likeDate)
+		VALUES (#{postId}, #{memberId}, SYSDATE)
+	</insert>
+
+	<insert id="insertBookmark" parameterType="map">
+		INSERT INTO bookmark
+		(memberId, postId, bookmarkDate)
+		VALUES (#{memberId}, #{postId},
+		SYSDATE)
+	</insert>
+	<select id="getCommentCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) count
+		FROM comments
+		WHERE postId=#{postId}
+	</select>
+	<select id="isAlreadyBookmarked" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM bookmark
+		WHERE postId = #{postId} AND memberId =
+		#{memberId}
+	</select>
+
+	<select id="isAlreadyLiked" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM likes
+		WHERE postId = #{postId} AND memberId =
+		#{memberId}
+	</select>
+</mapper>

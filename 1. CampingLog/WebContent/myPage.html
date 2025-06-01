@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마이페이지 | 캠핑로그</title>
+  <link rel="stylesheet" href="css/myPage.css" />
+  <!-- jQuery 먼저 로드 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- include.js는 헤더/푸터 로드용, defer 없이 바로 실행 -->
+  <script src="js/include.js"></script>
+  <!-- 페이지별 스크립트는 본문 아래로 이동 -->
+</head>
+<body>
+  <div id="container">
+    <div data-include="header.html"></div>
+
+    <div id="contentscontainer">
+      <div id="profile-info" class="profile-box">
+        <div class="profile-top-section">
+          <div class="profile-left">
+            <img id="profileImage" src="" alt="프로필 이미지" />
+            <form id="profilePhotoForm" enctype="multipart/form-data">
+              <input type="file" name="photo" id="photoInput" accept="image/*" style="display: none;" />
+            </form>
+            <button type="button" id="photoUploadBtn">사진 수정</button>
+          </div>
+
+          <div class="profile-right-wrap">
+            <div class="profile-top">
+              <img src="" alt="요약 아이콘" class="summary-icon" />
+              <div class="summary-text"></div>
+            </div>
+
+            <div class="profile-right">
+              <div class="profile-details"></div>
+              <div class="button-group">
+                <button class="edit-btn">정보 수정</button>
+                <button class="delete-btn">회원 탈퇴</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 뷰 선택 박스: id를 viewSelector로 변경 -->
+        <div class="my-posts-toggle">
+          <select id="viewSelector">
+            <option value="my-posts">내가 쓴 글</option>
+            <option value="my-bookmarks">내가 북마크한 글</option>
+          </select>
+        </div>
+
+        <!-- 글/북마크 컨테이너: id와 class 변경으로 스크립트 매칭 -->
+        <div id="my-posts" class="post-list-section">
+          <div class="post-list"></div>
+        </div>
+        <div id="my-bookmarks" class="post-list-section" style="display: none;">
+          <div class="post-list"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-include="footer.html"></div>
+  </div>
+</body>
+</html>

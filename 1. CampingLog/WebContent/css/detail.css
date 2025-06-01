@@ -1,0 +1,288 @@
+@import url('global.css');
+
+.page-title {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.post {
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	padding: 30px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 20px;
+	width: 100%;
+	max-width: 1280px;
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
+
+.profile-img {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.comment-profile-img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.profile-name-badge {
+	display: flex;
+	align-items: center;
+	margin-top: 4px;
+}
+
+.badge {
+	width: 20px;
+	height: 20px;
+	object-fit: contain;
+	display: inline-block;
+	max-width: 100%;
+}
+
+.profile {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	align-items: center;
+}
+
+.nickName {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.comment-badge {
+	width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.comment-nickName {
+	font-size: 12px;
+}
+
+.comment-mark{
+	margin-bottom: 14px;
+}
+
+.comment-marks {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.comment-count {
+	font-size: 20px;
+}
+
+.comment-nickName {
+	font-size: 12px;
+}
+
+.tags {
+	margin-bottom: 8px;
+	display: flex;
+}
+
+.tags div {
+	background-color: #eee;
+	border-radius: 12px;
+	padding: 4px 8px;
+	font-size: 15px;
+	margin-right: 6px;
+}
+
+.post-info div {
+	padding: 7px;
+	font-size: 17px;
+}
+
+.post-title {
+	font-size: 25px;
+	font-weight: bold;
+	margin: 0 0 8px 0;
+}
+
+.title {
+	flex: 1;
+}
+
+.post-info {
+	font-size: 12px;
+	text-align: right;
+	white-space: nowrap;
+	display: flex;
+}
+
+.title-top {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.manage-post {
+	margin-bottom: 8px;
+}
+
+.manage-post button {
+	background-color: #8a9c7d;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 4px;
+	width: 50px;
+	height: 30px;
+}
+
+.meta {
+	color: #666;
+	font-size: 14px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.post-image img {
+	width: 100%;
+	border-radius: 12px;
+	margin-bottom: 20px;
+}
+
+.post-content {
+	background: #fafafa;
+	padding: 20px;
+	border-radius: 12px;
+	line-height: 1.8;
+}
+
+.post-body {
+	font-size: 17px;
+	color: #333;
+}
+
+.post-footer {
+	margin-top: 20px;
+	margin-right: 30px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 30px;
+	font-size: 18px;
+}
+
+.post-footer-set {
+	display: flex; 
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.comments {
+	margin-top: 40px;
+}
+
+.comment {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.comment-input {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.comment-input input[type="text"] {
+	flex: 1;
+	padding: 10px 14px;
+	border-radius: 20px;
+	border: 1px solid #ccc;
+}
+
+.comment-input button {
+	background-color: #8a9c7d;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-size: 14px;
+	cursor: pointer;
+	width: 50px;
+	height: 30px;
+	margin-bottom: 2px;
+}
+
+.comment-box {
+	background-color: #f1f1f1;
+	padding: 10px 14px;
+	border-radius: 12px;
+	max-width: 600px;
+}
+
+.comment-date {
+	font-size: 11px;
+	margin-bottom: 4px;
+	text-align: right;
+}
+
+.comment-text {
+	font-size: 14px;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	gap: 10px; /* 요소 간 간격 */
+	color: #333;
+}
+
+.page, .current-page, .arrow {
+	padding: 6px 12px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.current-page {
+	font-weight: bold;
+}
+.like-btn, .bookmark-btn {
+  background-color: #ff7675;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.like-btn:hover {
+  background-color: #e17055;
+}

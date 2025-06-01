@@ -1,0 +1,10 @@
+=\=\=\=\=\=\=
+<<<<<<<=Updated upstream
+>>>>>>>=Stashed changes
+eclipse.preferences.version=1
+encoding//WebContent/css/mainStyle.css=UTF-8
+encoding//WebContent/footer.html=UTF-8
+encoding//WebContent/header.html=UTF-8
+encoding//WebContent/myPage.html=UTF-8
+encoding//src/com/camp/servlet/AddCommentAction.java=UTF-8
+encoding//src/com/camp/servlet/GetMyInfoAction.java=UTF-8

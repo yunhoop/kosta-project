@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>캠핑로거</title>
+<link rel="stylesheet" type="text/css" href="css/mainStyle.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/include.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+<body>
+	<div id="container">
+		<div data-include="header.html"></div>
+		<div id="section">
+			<div class="content1">
+				<div class="topCamp">
+					<div class="topTitle">
+						<p>인기 상승 캠핑장</p>
+					</div>
+					<div class="topList">
+						<div class="topLeft"></div>
+						<div class="topRight"></div>
+					</div>
+				</div>
+				<div class="downGear">
+					<div class="downTitle">
+						<p>인기 장비 리뷰</p>
+					</div>
+					<div class="downList">
+  						<swiper-container class="mySwiper" navigation="true" slides-per-view="auto" space-between="23" initial-slide="1">
+  						</swiper-container>
+  					</div>
+				</div>
+			</div>
+			<div class="content2">
+				<div class="downTitle">
+					<p>명예의 캠핑로거</p>
+				</div>
+				<div class="downRankAd">
+					<div class="downRank">
+						<div class="rankList">
+							<div class="rankDate">
+								<p>2025.04 기준</p>
+							</div>
+						</div>
+					</div>
+					<div class="downAd">
+						<div class="adImg">
+							<img src="img/ad12.png" alt="광고 이미지">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-include="footer.html"></div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+	<script src="js/mainEquList.js"></script>
+</body>
+</html>

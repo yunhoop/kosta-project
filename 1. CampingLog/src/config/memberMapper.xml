@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+	<insert id="addMember" parameterType="com.camp.model.MemberVO">
+		INSERT INTO MEMBER (
+		memberId, pw, email, nickName, name, phoneNumber, inDate,
+		memberImage,
+		gradeId)
+		VALUES ( #{memberId}, #{pw}, #{email}, #{nickName},
+		#{name},
+		#{phoneNumber}, SYSDATE, #{memberImage, jdbcType=VARCHAR},
+		#{gradeId,
+		jdbcType=INTEGER})
+	</insert>
+
+	<!-- ID 중복 확인 -->
+	<select id="isDuplicateId" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM member WHERE memberId = #{value}
+	</select>
+
+	<!-- 이메일 중복 확인 -->
+	<select id="isDuplicateEmail" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM member WHERE email = #{value}
+	</select>
+
+	<!-- 닉네임 중복 확인 -->
+	<select id="isDuplicateNickName" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM member WHERE nickName = #{value}
+	</select>
+
+
+	<select id="getMembers" resultType="com.camp.model.MemberVO">
+		select memberId, email,
+		nickName, name, phoneNumber, inDate
+		from member
+	</select>
+
+	<select id="login" parameterType="com.camp.model.MemberVO"
+		resultType="com.camp.model.MemberVO">
+		SELECT memberId, email, nickName, inDate, memberImage, name
+		FROM member
+		WHERE
+		memberId = #{memberId, jdbcType=VARCHAR} AND pw = #{pw, jdbcType=VARCHAR}
+	</select>
+
+	<select id="pwCheck" parameterType="com.camp.model.MemberVO"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE memberId = #{memberId} AND
+		pw = #{pw}
+	</select>
+
+	<update id="updateProfile" parameterType="com.camp.model.MemberVO">
+		UPDATE MEMBER
+		<set>
+			<if test="email != null">email = #{email},</if>
+			<if test="nickName != null">nickName = #{nickName},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="phoneNumber != null">phoneNumber = #{phoneNumber},</if>
+			<if test="memberImage != null">memberImage = #{memberImage}</if>
+		</set>
+		WHERE memberId = #{memberId}
+	</update>
+
+	<update id="updatePw" parameterType="map">
+		UPDATE MEMBER
+		SET pw =
+		#{newPw}
+		WHERE memberId = #{memberId}
+		AND pw = #{pw}
+	</update>
+
+	<select id="getMemberImage" parameterType="string" resultType="string">
+		SELECT memberImage
+		FROM MEMBER
+		WHERE memberId = #{memberId}
+	</select>
+
+	<update id="setMemberImage" parameterType="map">
+		UPDATE MEMBER
+		SET
+		memberImage = #{memberImage, jdbcType=VARCHAR}
+		WHERE memberId =
+		#{memberId}
+	</update>
+
+	<update id="updateMemberImage" parameterType="map">
+		UPDATE MEMBER
+		SET
+		memberImage = #{memberImage, jdbcType=VARCHAR}
+		WHERE memberId =
+		#{memberId}
+	</update>
+
+	<update id="setDefaultImage" parameterType="string">
+		UPDATE MEMBER
+		SET
+		memberImage = 'defaultMemberImage.png'
+		WHERE memberId = #{memberId}
+	</update>
+
+	<select id="getMyInfo" parameterType="string" resultType="com.camp.model.MemberVO">
+		SELECT
+		m.memberId, m.email, m.nickName, m.name, m.phoneNumber, m.memberImage,
+		m.inDate, m.gradeId,
+		(SELECT COUNT(*) FROM Post p WHERE p.memberId =
+		m.memberId) AS postCount,
+		(SELECT COUNT(*) FROM Likes l JOIN Post p ON
+		l.postId = p.postId
+		WHERE p.memberId = m.memberId) AS likeCount
+		FROM
+		MEMBER m
+		JOIN GRADE g ON m.gradeId = g.gradeId
+		WHERE m.memberId =
+		#{memberId}
+	</select>
+
+	<select id="getMyPosts" parameterType="string" resultType="map">
+		SELECT
+		p.postId AS "postId",
+		p.postTitle AS "postTitle",
+		p.postDate AS
+		"postDate",
+		p.postImage AS "postImage"
+		FROM Post p
+		WHERE p.memberId =
+		#{memberId}
+		ORDER BY p.postDate DESC
+	</select>
+
+	<select id="getMyBookmarks" parameterType="string" resultType="map">
+		SELECT
+		p.postTitle AS "postTitle",
+		p.postImage AS "postImage",
+		b.bookmarkDate AS "bookmarkDate"
+		FROM Post p
+		JOIN Bookmark b ON p.postId
+		= b.postId
+		WHERE b.memberId = #{memberId}
+		ORDER BY b.bookmarkDate DESC
+	</select>
+
+	<select id="getYourInfo" parameterType="string" resultType="com.camp.model.MemberVO">
+		SELECT
+		m.memberId, m.email, m.nickName, m.inDate, g.badgeImage,
+		(SELECT
+		COUNT(*) FROM Post p
+		WHERE p.memberId = m.memberId) AS postCount,
+		(SELECT COUNT(*) FROM Likes l
+		JOIN Post p ON l.postId = p.postId
+		WHERE
+		p.memberId = m.memberId) AS likeCount
+		FROM MEMBER m
+		JOIN GRADE g ON
+		m.gradeId = g.gradeId
+		WHERE m.memberId = #{memberId}
+	</select>
+
+	<update id="updateProfileImage" parameterType="map">
+		UPDATE member
+		SET
+		MEMBERIMAGE = #{fileName}
+		WHERE MEMBERID = #{memberId}
+	</update>
+
+	<update id="updateMemberInfo" parameterType="com.camp.model.MemberVO">
+		UPDATE member
+		SET
+		EMAIL = #{email},
+		NICKNAME = #{nickName},
+		NAME = #{name},
+		PHONENUMBER =
+		#{phoneNumber}
+		WHERE MEMBERID = #{memberId}
+	</update>
+
+	<delete id="deleteMember" parameterType="map">
+		DELETE FROM member
+		WHERE
+		memberId = #{memberId} AND pw = #{pw}
+	</delete>
+
+
+	<select id="getMemberById" parameterType="String"
+		resultType="com.camp.model.MemberVO">
+		SELECT memberId, email, nickName, name, phoneNumber,
+		inDate, memberImage,
+		gradeId
+		FROM member
+		WHERE memberId = #{memberId}
+	</select>
+
+
+	<select id="isDuplicateEmailExcludingSelf" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE email = #{email}
+		AND
+		memberId != #{memberId}
+	</select>
+
+	<select id="isDuplicateNickNameExcludingSelf" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE nickName = #{nickName}
+		AND
+		memberId != #{memberId}
+	</select>
+
+	<select id="getPasswordById" resultType="String">
+		SELECT pw FROM member
+		WHERE memberId = #{memberId}
+	</select>
+
+	<update id="updatePassword" parameterType="map">
+		UPDATE member
+		SET pw = #{pw}
+		WHERE memberId = #{memberId}
+	</update>
+
+
+
+
+
+</mapper>

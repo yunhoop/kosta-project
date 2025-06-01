@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 작성</title>
+  <link rel="stylesheet" href="css/postWrite.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="js/include.js" defer></script>
+  <script src="js/validatePostForm.js" defer></script>
+  <script src="js/imagePreview.js" defer></script>
+  <script src="js/tagToggle.js" defer></script>
+  <script src="js/tagLoader.js" defer></script>
+  <script src="js/writePost.js" defer></script>
+</head>
+<body>
+  <div id="container">
+    <div data-include="header.html"></div>
+    <h2>게시글 작성</h2>
+
+    <form id="postForm" enctype="multipart/form-data">
+      <input type="text" name="postTitle" placeholder="제목을 입력하세요" required />
+
+      <select name="categoryId" id="categorySelect" required>
+        <option value="">카테고리 선택</option>
+        <option value="2">초보꿀팁</option>
+        <option value="3">캠핑장 리뷰</option>
+        <option value="4">장비 리뷰</option>
+        <option value="5">Q&A</option>
+      </select>
+
+      <div class="editor-box">
+        <textarea name="postContents" placeholder="내용을 입력하세요" required></textarea>
+      </div>
+
+      <div class="add-photo-box">
+        <label for="imageInput">이미지 파일명</label>
+      </div>
+
+      <input type="file" id="imageInput" name="postImageFile" accept="image/*" style="display: none;" />
+      <input type="text" id="imageFileNameDisplay" placeholder="선택된 파일 없음" readonly />
+
+      <div class="image-upload-box" onclick="triggerImageUpload()">
+        <p id="imagePreviewBox">
+          <img src="img/photoicon.png" alt="미리보기" id="previewImg" class="preview-image" />
+          <br />
+          <span id="uploadGuide">클릭하여 파일을 업로드하세요</span>
+        </p>
+      </div>
+
+      <div id="selectedTags"></div>
+      <div class="tag-grid" id="tagContainer"></div>
+
+      <button type="submit" class="submit-btn">게시하기</button>
+    </form>
+
+    <div data-include="footer.html"></div>
+  </div>
+</body>
+</html>

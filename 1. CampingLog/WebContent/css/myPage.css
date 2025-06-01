@@ -1,0 +1,233 @@
+@CHARSET "UTF-8";
+
+@import url('global.css');
+
+body {
+	margin: 0;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.contentscontainer {
+	max-width: 500px;
+	margin: 40px auto;
+	padding: 0 20px;
+	box-sizing: border-box;
+	
+}
+
+.profile-box {	
+	flex-direction: column;
+	background-color: #fff;
+	padding: 40px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	gap: 40px;
+	margin: 40px auto; /* 상하 여백 + 가운데 정렬 */
+	width: 90%; /* 블럭처럼 자연스럽게 */
+	max-width: 1000px; /* 최대 너비 제한 */
+	box-sizing: border-box;
+}
+
+.profile-top-section {
+  display: flex;
+  gap: 40px;
+}
+
+.profile-left {
+	width: 35%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+}
+
+.profile-left img {
+	width: 240px;
+	height: 240px;
+	border-radius: 20px;
+	background-color: #d8e7c9;
+	object-fit: cover;
+}
+
+.profile-left button {
+	margin-top: 15px;
+	background-color: #798964;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.profile-right-wrap {
+	width: 65%;
+	display: flex;
+	flex-direction: column;
+}
+
+.profile-top {
+	display: flex;
+	align-items: flex-start;
+	background-color: #f9f5f0;
+	padding: 10px;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	line-height: 1.2;
+	gap: 20px;
+	font-size: 18px;
+}
+
+.summary-icon {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+	margin-top: 4px;
+}
+
+.summary-text p {
+	margin: 2px 0;
+	font-size: 18px;
+}
+
+.profile-right {
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.profile-info p {
+	margin: 10px 0;
+}
+
+.button-group {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center; /* 가로 중앙 정렬 */
+	gap: 20px; /* 버튼 사이 간격  */
+	margin-top: 20px; /* 위와의 간격은 유지 */
+}
+
+.button-group button {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.edit-btn {
+	background-color: #798964;
+	color: white;
+}
+
+.delete-btn {
+	background-color: #DB2C2F;
+	color: white;
+}
+
+.my-posts {
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.my-posts-toggle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#postType {
+  margin-left: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* ———————————————————————————————————————— */
+/* 내가 쓴 글 / 북마크 리스트 그리드 레이아웃 */
+/* ———————————————————————————————————————— */
+
+/* 1) 뷰 선택 박스 (드롭다운) */
+.my-posts-toggle {
+  margin: 1.5rem 0;
+  text-align: left;
+}
+#viewSelector {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* 2) 글/북마크 섹션 간격 */
+.post-list-section {
+  margin-top: 1rem;
+}
+
+/* 3) 리스트 그리드 설정: 한 줄에 3개 카드 */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* 4) 카드(포스트 아이템) 기본 스타일 */
+.card, .post-item {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 정사각형 */
+}
+
+/* 5) 카드 내부 이미지 */
+.card img, .post-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 6) 카드 제목 오버레이 */
+.card .title,
+.post-item .post-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 게시물이 없을 때 안내문 */
+.no-posts {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* 7) 반응형: 화면이 좁아지면 2열, 1열로 변경 */
+@media (max-width: 900px) {
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

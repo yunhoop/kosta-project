@@ -1,0 +1,171 @@
+@CHARSET "UTF-8";
+
+@import url('global.css');
+
+body {
+	margin: 0;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.contentscontainer {
+	max-width: 500px;
+	margin: 40px auto;
+	padding: 0 20px;
+	box-sizing: border-box;
+	
+}
+
+.profile-box {	
+	flex-direction: column;
+	background-color: #fff;
+	padding: 40px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	gap: 40px;
+	margin: 40px auto; /* 상하 여백 + 가운데 정렬 */
+	width: 90%; /* 블럭처럼 자연스럽게 */
+	max-width: 1000px; /* 최대 너비 제한 */
+	box-sizing: border-box;
+}
+
+.profile-top-section {
+  display: flex;
+  gap: 40px;
+}
+
+.profile-left {
+	width: 35%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+}
+
+.profile-left img {
+	width: 240px;
+	height: 240px;
+	border-radius: 20px;
+	background-color: #d8e7c9;
+	object-fit: cover;
+}
+
+.profile-left button {
+	margin-top: 15px;
+	background-color: #798964;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.profile-right-wrap {
+	width: 65%;
+	display: flex;
+	flex-direction: column;
+}
+
+.profile-top {
+	display: flex;
+	align-items: flex-start;
+	background-color: #f9f5f0;
+	padding: 10px;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	line-height: 1.2;
+	gap: 20px;
+	font-size: 18px;
+}
+
+.summary-icon {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+	margin-top: 4px;
+}
+
+.summary-text p {
+	margin: 2px 0;
+	font-size: 18px;
+}
+
+.profile-right {
+	padding: 60px;
+	margin-bottom: 10px;
+}
+
+.profile-info p {
+	padding: 10px;
+	font-size: 18px;
+}
+
+.button-group {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center; /* 가로 중앙 정렬 */
+	gap: 20px; /* 버튼 사이 간격  */
+	margin-top: 20px; /* 위와의 간격은 유지 */
+}
+
+.button-group button {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.edit-btn {
+	background-color: #798964;
+	color: white;
+}
+
+.delete-btn {
+	background-color: #DB2C2F;
+	color: white;
+}
+
+.my-posts {
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;  /* 가운데 정렬 (선택사항) */
+  gap: 30px;                /* 이미지+제목 간 간격 */
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.post-item {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.post-item img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.post-title {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}

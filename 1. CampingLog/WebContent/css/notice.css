@@ -1,0 +1,70 @@
+@import url("global.css");
+
+.notice {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.notice h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.accordion-item {
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.accordion-header-wrapper {
+  border-radius: 8px;
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  background-color: #faf5ec;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.accordion-header::after {
+  content: '+';
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.accordion-item.active .accordion-header::after {
+  content: '-';
+}
+
+.accordion-body {
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  display: none;
+  max-width: 95%;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.accordion-item.active .accordion-body {
+  display: block;
+  background-color: #e0e0e0;
+}
+
+
