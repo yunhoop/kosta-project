@@ -1,0 +1,260 @@
+:root {
+    --color-1: #11C6CF;
+    --color-2: #22DFCD;
+    --color-3: #33C181;
+    --color-4: #4CD889;
+    --color-1-10: #11C6CF19;
+    --color-2-10: #22DFCD19;
+    --color-3-10: #33C18119;
+    --color-4-10: #4CD88919;
+    --color-1-20: #11C6CF33;
+    --color-2-20: #22DFCD33;
+    --color-3-20: #33C18133;
+    --color-4-20: #4CD88933;
+    --bg1: #F9F9FA;
+    --bg2: #D9D9D9;
+    --bg3: #3E3E3E;
+    --danger: #E9818B;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ========== Layout Base ========== */
+html, body {
+    line-height: 1.5;
+    min-height: 100vh;
+    height: 100%;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* ========== Header ========== */
+
+/* 헤더 스타일 */
+#header {
+    border-bottom: 1px solid var(--bg2);
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* 로고 영역 */
+.leftMenu {
+    display: flex;
+    align-items: center;
+}
+
+.logoBox {
+    width: 120px;
+    height: 50px;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+.rightMenu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.memberInfo {
+    display: flex;
+    align-items: center;
+}
+
+.memberInfo p {
+    font-size: 16px;
+}
+
+.memberInfo {
+    display: none;
+}
+
+.memberImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.memberDefault {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.goal p {
+    color: var(--color-3); /* “감량” 부분만 녹색 원하시면 .goal p에만 지정해도 됩니다. */
+    font-weight: 600; /* 예시: 조금 굵게*/
+}
+
+.goal p,
+.memberName p {
+    margin: 0; /* 기본 브라우저 여백 제거 */
+    padding: 0;
+    line-height: 1; /* 텍스트 높이를 이미지 높이에 맞춰 중앙으로 */
+    font-size: 16px; /* 필요에 따라 조절하세요 */
+}
+
+/* (옵션) 여러 줄이 들어가지 않도록 한번에 정렬되게 하려면 */
+.memberName p {
+    white-space: nowrap;
+}
+
+/* 로그아웃 버튼 */
+.logout-btn {
+    display: none; /* 초기에는 숨김 상태, JavaScript에서 필요에 따라 표시 */
+    background-color: var(--color-3);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.logout-btn:hover {
+    background-color: var(--color-4);
+}
+
+/* 초기 상태 설정 */
+.login-btn {
+    background-color: var(--color-3);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.login-btn:hover {
+    background-color: var(--color-4);
+}
+
+#section1 {
+    display: flex;
+    padding: 0.5rem 1.5rem;
+    height: 100%;
+}
+
+.sideBar {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid var(--bg2);
+    float: left;
+}
+
+/* 토글 아이콘 기본 (숨김 불필요 시 그대로) */
+.sideBar .toggle-icon {
+    transition: transform 0.2s ease;
+}
+
+/* .has-children 만 보이게 (선택사항) */
+.sideBar .menu-item.has-children .toggle-icon {
+    visibility: visible;
+}
+
+/* 토글 열렸을 때 90° 회전 */
+.sideBar .menu-item.open .toggle-icon {
+    transform: rotate(90deg);
+}
+
+.sideBar .menu {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 각 메뉴 아이템 */
+.sideBar .menu-item {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+
+.sideBar .menu-item:hover,
+.sideBar .menu-item.active {
+}
+
+/* 메뉴 라벨(아이콘+텍스트) */
+.sideBar .menu-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+/* 서브메뉴(접었다 펼침) */
+.sideBar .submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+    padding-left: 1.5rem;
+}
+
+.sideBar .menu-item.open > .submenu {
+    max-height: 500px; /* 충분히 큰 값 */
+}
+
+/* 서브메뉴 아이템 */
+.sideBar .submenu-item {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.sideBar .submenu-item.active {
+    background-color: var(--color-4-20);
+}
+
+.sideBar .submenu-item:hover {
+    background-color: var(--color-4-20);
+}
+
+.sideBar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 또는 */
+#section1 .sideBar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.main-content {
+    width: 80%;
+    float: right;
+    padding: 20px;
+}
