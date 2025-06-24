@@ -21,7 +21,7 @@
 ### 🧠 BACKEND
 ![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)
 
-###☁️ 배포 및 인프라
+### ☁️ 배포 및 인프라
 ![EC2](https://img.shields.io/badge/AWS_EC2-FF9900?style=flat-square&logo=amazon-ec2&logoColor=white)
 
 ## ✨ 회고
