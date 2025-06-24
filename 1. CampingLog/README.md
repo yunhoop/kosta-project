@@ -30,6 +30,7 @@
 
 ### 🧠 BACKEND
 ![Java](https://img.shields.io/badge/Java-007396?style=flat-square&logo=openjdk&logoColor=white)
+![JSP](https://img.shields.io/badge/JSP-FF4500?style=flat-square)
 ![MyBatis](https://img.shields.io/badge/MyBatis-1F6CAB?style=flat-square)
 ![Oracle](https://img.shields.io/badge/Oracle_DB-F80000?style=flat-square&logo=oracle)
 
