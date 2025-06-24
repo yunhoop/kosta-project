@@ -1,0 +1,45 @@
+<div id="container">
+    <div id="header"></div>
+
+    <div id="section1">
+        <!-- 공통 사이드바가 주입될 자리 -->
+        <div class="sideBar"></div>
+
+        <div class="board-info">
+            <div class="board-title">
+                <p><!-- 동적으로 제목 채워짐 --></p>
+            </div>
+
+            <div class="board-write-filter">
+                <div class="write">
+                    <button type="button" class="btn" onclick="location.hash = '/board/write'">
+                        <i class="bi bi-pencil-square"></i> 글 쓰기
+                    </button>
+                </div>
+                <div class="filter">
+                    <div class="view-count">
+                        <input type="radio" name="sort" value="조회순">조회순
+                    </div>
+                    <div class="latest">
+                        <input type="radio" name="sort" value="최신순">최신순
+                    </div>
+                </div>
+            </div>
+
+            <div class="board-column">
+                <div>제목</div>
+                <div>작성자</div>
+                <div>조회수</div>
+                <div>작성일</div>
+            </div>
+            <div class="board-list">
+            </div>
+            <div class="search-result">
+                <input type="text" placeholder="검색어를 입력하세요." class="searchTotal">
+            </div>
+            <div class="board-pagination">
+
+            </div>
+        </div>
+    </div>
+</div>
