@@ -51,11 +51,13 @@ html, body {
     padding: 16px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
 }
 
 /* 로고 영역 */
 .leftMenu {
+    display: flex;
     align-items: center;
 }
 
@@ -86,36 +88,76 @@ html, body {
     font-size: 16px;
 }
 
+.memberInfo {
+    display: none;
+}
+
 .memberImg {
-    width: 50px;
+    width: 40px;
     height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .memberDefault {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .goal p {
-    color: var(--color-3);
+    color: var(--color-3); /* “감량” 부분만 녹색 원하시면 .goal p에만 지정해도 됩니다. */
+    font-weight: 600; /* 예시: 조금 굵게*/
+}
+
+.goal p,
+.memberName p {
+    margin: 0; /* 기본 브라우저 여백 제거 */
+    padding: 0;
+    line-height: 1; /* 텍스트 높이를 이미지 높이에 맞춰 중앙으로 */
+    font-size: 16px; /* 필요에 따라 조절하세요 */
+}
+
+/* (옵션) 여러 줄이 들어가지 않도록 한번에 정렬되게 하려면 */
+.memberName p {
+    white-space: nowrap;
 }
 
 /* 로그아웃 버튼 */
 .logout-btn {
+    display: none; /* 초기에는 숨김 상태, JavaScript에서 필요에 따라 표시 */
     background-color: var(--color-3);
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .logout-btn:hover {
-    background-color: var(--color-3-20);
+    background-color: var(--color-4);
+}
+
+/* 초기 상태 설정 */
+.login-btn {
+    background-color: var(--color-3);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.login-btn:hover {
+    background-color: var(--color-4);
 }
 
 #section1 {
@@ -192,8 +234,23 @@ html, body {
     font-size: 16px;
 }
 
+.sideBar .submenu-item.active {
+    background-color: var(--color-4-20);
+}
+
 .sideBar .submenu-item:hover {
     background-color: var(--color-4-20);
+}
+
+.sideBar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 또는 */
+#section1 .sideBar a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .main-content {

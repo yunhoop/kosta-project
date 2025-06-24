@@ -11,12 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 import com.google.gson.Gson;
-import com.oopsw.selfit.auth.CustomOAuth2FailureHandler;
-import com.oopsw.selfit.auth.CustomOAuth2UserService;
+import com.oopsw.selfit.auth.service.CustomOAuth2UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -27,18 +29,18 @@ public class SecurityConfig {
 	private final Gson gson = new Gson();
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService,
-		CustomOAuth2FailureHandler customOAuth2FailureHandler) throws
+	public SecurityFilterChain filterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws
 		Exception {
 		http.csrf(csrf -> csrf.disable());
 		http
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/board/list").permitAll()
-				.requestMatchers("/board/detail").permitAll()
+				.requestMatchers("/board/detail/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/account/member").permitAll()
 				.requestMatchers("/account/login").permitAll()
 				.requestMatchers("/account/signup").permitAll()
-				.requestMatchers("account/signup-oauth").permitAll()
+				.requestMatchers("/account/signup-oauth").permitAll()
+				.requestMatchers("/api/account/member/check-login").permitAll()
 				.requestMatchers("/board/**").hasRole("USER")
 				.requestMatchers("/dashboard/**").hasRole("USER")
 				.requestMatchers("/account/**").hasRole("USER")
@@ -57,13 +59,12 @@ public class SecurityConfig {
 			.permitAll()
 		);
 
-		// 뒤에서 Authorization code로 AccessToken 받는거 알아서 실행되고 userInfo를 통해 AccessToken으로 사용자정보 받아옴
 		http
 			.oauth2Login(oauth2 -> oauth2
 				.userInfoEndpoint(userInfo -> userInfo
 					.userService(customOAuth2UserService))
-				.defaultSuccessUrl("/dashboard")
-				.failureHandler(customOAuth2FailureHandler)
+				.successHandler(oAuth2SuccessHandler())
+				.failureHandler(oAuth2FailureHandler())
 			);
 
 		http.logout(logout -> logout
@@ -106,4 +107,35 @@ public class SecurityConfig {
 			gson.toJson(error, response.getWriter());
 		};
 	}
+
+	// OAuth2 로그인용 성공 핸들러 추가
+	@Bean
+	public AuthenticationSuccessHandler oAuth2SuccessHandler() {
+		return (request, response, authentication) -> {
+			SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+
+			if (savedRequest != null) {
+				String targetUrl = savedRequest.getRedirectUrl();
+				if (!targetUrl.contains("/api/")) {
+					response.sendRedirect(targetUrl);
+					return;
+				}
+			}
+
+			// 저장된 요청이 없거나 API 요청인 경우 대시보드로
+			response.sendRedirect("/dashboard");
+		};
+	}
+
+	@Bean
+	public AuthenticationFailureHandler oAuth2FailureHandler() {
+		return (request, response, exception) -> {
+			HttpSession session = request.getSession(false);
+			String email = (String)session.getAttribute("email");
+			String name = (String)session.getAttribute("name");
+
+			response.sendRedirect("/account/signup-oauth");
+		};
+	}
+
 }

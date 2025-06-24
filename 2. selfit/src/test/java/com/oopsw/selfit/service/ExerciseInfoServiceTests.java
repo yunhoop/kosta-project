@@ -1,6 +1,9 @@
 package com.oopsw.selfit.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,6 +59,7 @@ public class ExerciseInfoServiceTests {
 			.exerciseNoteId(exerciseNoteId)
 			.exerciseMin(exerciseMin)
 			.met(met)
+			.exerciseName("등산")
 			.build();
 
 		// when
@@ -75,5 +79,54 @@ public class ExerciseInfoServiceTests {
 		assertEquals(expectedKcal, saved.getExerciseKcal(), 0.01f); // 소수 오차 허용
 	}
 
+	@Test
+	public void testSetExerciseMinYes() {
+		// given
+		ExerciseInfos exercise = ExerciseInfos.builder()
+			.exerciseNoteId(1)
+			.exerciseMin(30)
+			.met(3.0f)
+			.exerciseKcal(150f)
+			.exerciseName("테스트운동")
+			.build();
+
+		ExerciseInfos saved = exerciseInfoRepository.save(exercise);
+		int id = saved.getExerciseInfoId();
+
+		// when
+		int newMin = 60;
+		boolean result = exerciseInfoService.setExerciseMin(id, newMin);
+
+		// then
+		assertTrue(result);
+
+		ExerciseInfos updated = exerciseInfoRepository.findById(id).orElseThrow();
+		assertEquals(newMin, updated.getExerciseMin());
+
+		float expectedKcal = dashboardRepository.getWeight(updated.getExerciseNoteId()) *
+			updated.getMet() * newMin / 60f;
+		assertEquals(expectedKcal, updated.getExerciseKcal(), 0.01f);
+	}
+
+	@Test
+	void testGetExerciseInfoListYes() {
+		Exercise exercise = Exercise.builder()
+			.memberId(1)
+			.exerciseDate("2025-05-01")  // 이 값으로 exercise_note_id가 유도되는 구조라면
+			.build();
+
+		// when
+		List<Exercise> result = exerciseInfoService.getExerciseInfoList(exercise);
+
+		// then
+		assertNotNull(result);
+		assertEquals(11, result.size());
+
+		assertEquals("걷기", result.get(0).getExerciseName());
+		assertEquals(30, result.get(0).getExerciseMin());
+
+		assertEquals("달리기", result.get(1).getExerciseName());
+		assertEquals(20, result.get(1).getExerciseMin());
+	}
 
 }

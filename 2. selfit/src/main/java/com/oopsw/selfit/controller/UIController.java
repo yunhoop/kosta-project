@@ -27,8 +27,11 @@ public class UIController {
 		String name = (String)session.getAttribute("name");
 		model.addAttribute("email", email);
 		model.addAttribute("name", name);
-		System.out.println("회원가입페이지로 이동: " + email);
-		return "account/signup-oauth";
+		if (email == null) {
+			return "/account/login";
+		}
+
+		return "/account/signup-oauth";
 	}
 
 	@GetMapping("/account/mypage")
@@ -81,11 +84,12 @@ public class UIController {
 
 	@GetMapping("board/write")
 	public String write() {
-		return "board/boardWrite";
+		return "board/boardForm";
 	}
 
-	@GetMapping("baord/set")
-	public String set() {
-		return "board/boardWrite";
+	@GetMapping("/board/edit/{boardId}")
+	public String edit(@PathVariable int boardId, Model model) {
+		model.addAttribute("boardId", boardId);
+		return "board/boardForm";
 	}
 }

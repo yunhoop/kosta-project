@@ -74,6 +74,13 @@ textarea {
     border-radius: 6px;
 }
 
+#previewImg {
+    background-color: var(--color-3);
+}
+
+#placeholderIcon {
+    background-color: var(--color-3);
+}
 
 .image-upload-box:hover {
 
@@ -85,6 +92,7 @@ textarea {
     display: flex;
     align-items: flex-end;
     background-color: var(--color-3);
+    margin: 0 auto;
 }
 
 .btn:hover {

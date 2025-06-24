@@ -1,7 +1,11 @@
 package com.oopsw.selfit.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class MemberService {
+
+	private final List<String> genders = List.of("남자", "여자");
+	private final List<String> goals = List.of("유지", "감량", "증량");
+	private final List<String> memberTypes = List.of("DEFAULT", "GOOGLE");
 
 	private final MemberRepository memberRepository;
 	private final BoardRepository boardRepository;
@@ -48,6 +56,11 @@ public class MemberService {
 		}
 		member.setPw(encoder.encode(member.getPw()));
 
+		String errorMessage = validateMember(member);
+		if (errorMessage != null) {
+			throw new DataIntegrityViolationException(errorMessage);
+		}
+
 		return memberRepository.addMember(member) > 0;
 	}
 
@@ -74,6 +87,60 @@ public class MemberService {
 		int randomNumber = (int)(Math.random() * 100000); // 0 ~ 99999
 
 		return currentTime + "_" + randomNumber;
+	}
+
+	private String validateMember(Member member) {
+
+		if (memberRepository.checkExistEmail(member.getEmail()) != null) {
+			return "Email is duplicated";
+		}
+
+		if (member.getPw() == null) {
+			return "Password is null";
+		}
+
+		if (member.getName() == null) {
+			return "Name is null";
+		}
+
+		if (memberRepository.checkExistNickname(member.getNickname()) != null) {
+			return "Nickname is duplicated";
+		}
+
+		if (member.getGender() != null && !genders.contains(member.getGender())) {
+			return "gender is invalid";
+		}
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		if (member.getBirthday() != null) {
+			try {
+				LocalDate.parse(member.getBirthday(), formatter);
+			} catch (DateTimeParseException e) {
+				return "Birthday is invalid format";
+			}
+		}
+
+		if (member.getHeight() < 0 || member.getHeight() > 250) {
+			return "Height is invalid";
+		}
+
+		if (member.getWeight() < 0 || member.getWeight() > 300) {
+			return "Weight is invalid";
+		}
+
+		if (member.getGoal() != null && !goals.contains(member.getGoal())) {
+			return "Goal is invalid";
+		}
+
+		if (member.getJoinDate() != null) {
+			return "joinDate must be null";
+		}
+
+		if (member.getMemberType() == null || !memberTypes.contains(member.getMemberType())) {
+			return "memberType is invalid";
+		}
+
+		return null;
 	}
 
 }
