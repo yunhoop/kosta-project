@@ -33,6 +33,7 @@
 ![SpringSecurity](https://img.shields.io/badge/Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white)![버전](https://img.shields.io/badge/6.3.1-555555?style=flat-square)
 ![JPA](https://img.shields.io/badge/JPA-FF7F50?style=flat-square)![버전](https://img.shields.io/badge/3.1.0-555555?style=flat-square)
 ![MyBatis](https://img.shields.io/badge/MyBatis-1F6CAB?style=flat-square)![버전](https://img.shields.io/badge/3.0.3-555555?style=flat-square)
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb)![버전](https://img.shields.io/badge/10.6.22-555555?style=flat-square)
 ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-8BC34A?style=flat-square&logo=thymeleaf)![버전](https://img.shields.io/badge/3.1.1-555555?style=flat-square)
 ![Gson](https://img.shields.io/badge/Gson-FF6F00?style=flat-square)![버전](https://img.shields.io/badge/2.8.9-555555?style=flat-square)
 ![Lombok](https://img.shields.io/badge/Lombok-800080?style=flat-square)![버전](https://img.shields.io/badge/1.18.30-555555?style=flat-square)
@@ -50,7 +51,6 @@
 ### 🛠️ 개발 도구
 ![IntelliJ](https://img.shields.io/badge/IDEA-000000?style=flat-square&logo=intellijidea)![버전](https://img.shields.io/badge/2025.1.1.1-555555?style=flat-square)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apachemaven)![버전](https://img.shields.io/badge/3.9.6-555555?style=flat-square)
-![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb)![버전](https://img.shields.io/badge/10.6.22-555555?style=flat-square)
 ![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=junit5&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)
 
