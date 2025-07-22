@@ -18,17 +18,17 @@
 
 <br/>
 
+## 🏗️ 소프트웨어 아키텍처
+
+![3차 스프린트](./3차_스프린트.png)
+
+<br/>
+
 ## 🔧 주요 변경사항
 
 - 각 마이크로서비스를 Netflix Eureka를 통해 통합 관리하고, API Gateway를 통해 단일 포트 접근 방식으로 구성  
 - 인증(Authentication)은 member-service에서 담당하고, 인가(Authorization)는 API Gateway에서 처리  
 - Docker 이미지화 및 docker-compose를 통한 멀티 컨테이너 실행 환경 구축
-
-<br/>
-
-## 🏗️ 소프트웨어 아키텍처
-
-![3차 스프린트](./3차_스프린트.png)
 
 <br/>
 
