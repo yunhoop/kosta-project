@@ -1,0 +1,93 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: apigateway-service
+
+  cloud:
+    gateway.server.webflux:
+      routes:
+          - id: member-service
+            uri: lb://member-service
+            predicates:
+              - Path=/api/member-service/login-process
+              - Method=POST
+            filters:
+              - RemoveRequestHeader=Cookie
+
+          - id: member-service
+            uri: lb://member-service
+            predicates:
+              - Path=/api/member-service/member/**
+              - Method=POST
+            filters:
+              - RemoveRequestHeader=Cookie
+
+          - id: member-service
+            uri: lb://member-service
+            predicates:
+              - Path=/api/member-service/member/**
+            filters:
+              - RemoveRequestHeader=Cookie
+              - AuthorizationHeaderFilter
+
+          - id: board-service
+            uri: lb://board-service
+            predicates:
+              - Path=/api/board-service/list
+              - Method=GET
+            filters:
+              - RemoveRequestHeader=Cookie
+          - id: board-service
+            uri: lb://board-service
+            predicates:
+              - Path=/api/board-service/**
+            filters:
+              - AuthorizationHeaderFilter
+          - id: comment-service
+            uri: lb://comment-service
+            predicates:
+              - Path=/api/comment-service/**
+            filters:
+              - AuthorizationHeaderFilter
+          - id: food-service
+            uri: lb://food-service
+            predicates:
+              - Path=/api/food-service/**
+            filters:
+              - AuthorizationHeaderFilter
+          - id: exercise-service
+            uri: lb://exercise-service
+            predicates:
+              - Path=/api/exercise-service/**
+            filters:
+              - AuthorizationHeaderFilter
+          - id: checklist-service
+            uri: lb://checklist-service
+            predicates:
+              - Path=/api/checklist-service/**
+            filters:
+              - AuthorizationHeaderFilter
+          - id: dashboard-service
+            uri: lb://dashboard-service
+            predicates:
+              - Path=/api/dashboard-service/**
+            filters:
+              - AuthorizationHeaderFilter
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE:http://discovery-service:8761/eureka}
+
+shop:
+  message: E-shop
+
+token:
+  secret: c0783cea-e162-4965-927d-c19cd0a38791SFEx{9(7@ZqA_^l{{ZJtVREWy0%SF&pEH&eW0(SFWsAFX_3zy@

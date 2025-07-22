@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>회원가입</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/account/signup-oauth.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="module" src="/js/account/signup-oauth.js"></script>
+
+</head>
+<body>
+<!-- 메인 컨테이너 -->
+<div id="container">
+    <!-- 배경 그라데이션 레이어 -->
+    <div class="background-layer"></div>
+
+    <!-- 오른쪽 위 원형 그라데이션 -->
+    <div class="top-right-circle"></div>
+
+    <!-- 왼쪽 아래 원형 그라데이션 -->
+    <div class="bottom-left-circle"></div>
+
+    <!-- 블러 오버레이 -->
+    <div class="blur-overlay"></div>
+
+    <!-- 콘텐츠 영역 -->
+    <div class="content-wrapper">
+        <!-- 헤더 영역 -->
+        <div class="header-frame">
+            <div class="header-text">회원가입</div>
+        </div>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="main-content-frame">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6 col-lg-5">
+                        <div class="signup-form" id="signupForm">
+                            <!-- 이메일 -->
+                            <div class="mb-3">
+                                <label class="form-label text-muted">
+                                    이메일
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <div class="d-flex gap-2">
+                                    <div class="input-wrapper flex-grow-1">
+                                        <input class="form-control" id="email" value="#" type="email">
+                                        <i class="bi bi-check-lg check-icon"></i>
+                                    </div>
+                                    <button class="btn btn-duplicate" id="emailCheck" type="button">
+                                        <span class="btn-text">중복확인</span>
+                                        <span class="btn-loading d-none">
+                                                <span class="spinner-border spinner-border-sm me-1"></span>
+                                                확인중...
+                                            </span>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- 이름 -->
+                            <div class="mb-3">
+                                <label class="form-label text-muted">
+                                    이름
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input class="form-control" id="name" value="#" type="text">
+                                    <i class="bi bi-check-lg check-icon"></i>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- 닉네임 -->
+                            <div class="mb-3">
+                                <label class="form-label text-muted">
+                                    닉네임
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <div class="d-flex gap-2">
+                                    <div class="input-wrapper flex-grow-1">
+                                        <input class="form-control" id="nickname" type="text">
+                                        <i class="bi bi-check-lg check-icon"></i>
+                                    </div>
+                                    <button class="btn btn-duplicate" id="nicknameCheck" type="button">
+                                        <span class="btn-text">중복확인</span>
+                                        <span class="btn-loading d-none">
+                                                <span class="spinner-border spinner-border-sm me-1"></span>
+                                                확인중...
+                                            </span>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- 성별 -->
+                            <div class="mb-3">
+                                <label class="form-label text-muted">성별</label>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-outline-secondary gender-btn" data-gender="여자" type="button">
+                                        여자
+                                    </button>
+                                    <button class="btn btn-outline-secondary gender-btn" data-gender="남자" type="button">
+                                        남자
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 생년월일, 키, 몸무게 -->
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label class="form-label text-muted">생년월일</label>
+                                    <input type="date" class="form-control" id="birthDate">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label text-muted">키(cm)</label>
+                                    <input class="form-control number-only" id="height" maxlength="3" placeholder="키"
+                                           type="text">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label text-muted">몸무게(kg)</label>
+                                    <input class="form-control number-only" id="weight" maxlength="3" placeholder="몸무게"
+                                           type="text">
+                                </div>
+                            </div>
+
+                            <!-- 운동 유형 -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted">운동 유형</label>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-outline-secondary exercise-btn" data-type="감량" type="button">
+                                        감량
+                                    </button>
+                                    <button class="btn btn-outline-secondary exercise-btn" data-type="증량" type="button">
+                                        증량
+                                    </button>
+                                    <button class="btn btn-outline-secondary exercise-btn" data-type="유지" type="button">
+                                        유지
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 이용약관 동의 -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="agreeTerms" type="checkbox">
+                                    <label class="form-check-label text-muted" for="agreeTerms">
+                                        이용약관(필수)
+                                        <a class="text-primary text-decoration-none" href="#">약관보기</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 버튼 -->
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary px-5 py-3" disabled id="submitBtn" type="button">
+                                    <span class="btn-text">계정 등록</span>
+                                    <span class="btn-loading d-none">
+                                            <span class="spinner-border spinner-border-sm me-1"></span>
+                                            등록중...
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
