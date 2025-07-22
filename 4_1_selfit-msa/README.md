@@ -36,7 +36,7 @@
 
 ### 🧩 운영 관리  
 ![API Gateway](https://img.shields.io/badge/API_Gateway-339933?style=flat-square&logo=amazonapiGateway&logoColor=white)  
-![Eureka](https://img.shields.io/badge/Eureka-1488C6?style=flat-square&logo=spring&logoColor=white)
+![Eureka](https://img.shields.io/badge/Eureka-red?style=flat-square)
 
 ### ⚙️ DevOps  
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)  
