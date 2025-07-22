@@ -12,8 +12,8 @@
 |----------|------------------------------------|-------------------------------------------|
 | 염윤호    | exercise-service                  | RestTemplate 기반 서비스 간 통신 구현      |
 | 고민표    | member-service                    | JWT 기반 인증/인가 구조 리팩토링               |
-| 박희수    | food-service                      |                                           |
-| 이재원    | board-service, comment-service    |                                           |
+| 박희수    | food-service                      | RestTemplate 기반 서비스 간 통신 구현       |
+| 이재원    | board-service, comment-service    | SPA 구조 적용                              |
 | 이창훈    | checklist-service                 | Docker 이미지 빌드 및 Compose 구성         |
 
 <br/>
